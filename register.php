@@ -9,7 +9,7 @@ if (!file_exists('.env')) {
     header($_SERVER['SERVER_PROTOCOL'].' 404 Not Found', true, 404);
     $information = <<<HTML
 get your application variables from <a href='https://auth0.com'>Auth0</a><br/>
-save them in <code>/var/www/html/.env</code> (see <a href="https://auth0.com/docs/libraries/auth0-php">example</a>)<br/>
+save them in <code>/var/www/html/.env</code> (see <a href="https://raw.githubusercontent.com/Any-berg/quickbuild/master/.env.default">example</a>)<br/>
 <b>REMEMBER</b> to <code>chown www-data .env</code> and <code>chmod 400 .env</code>
 HTML;
     exit($information);
@@ -20,12 +20,15 @@ $loader = new Loader([
 ]);
 $loader->parse()->putenv(true);
 
+// reconstruct AUTH0_REDIRECT_URI from current one, as they should be identical
+$auth0_redirect_uri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+
 // contact authenticator for user information and login if new session is needed
 $auth0 = new Auth0([
   'domain' => getenv('AUTH0_DOMAIN'),
   'client_id' => getenv('AUTH0_CLIENT_ID'),
   'client_secret' => getenv('AUTH0_CLIENT_SECRET'),
-  'redirect_uri' => getenv('AUTH0_REDIRECT_URI'),
+  'redirect_uri' => $auth0_redirect_uri,
   'scope' => 'openid email',
 ]);
 $userInfo = $auth0->getUser();
@@ -63,4 +66,5 @@ else
 
 // https://auth0.com/docs/libraries/auth0-php
 // https://github.com/josegonzalez/php-dotenv
+// https://stackoverflow.com/questions/6768793/get-the-full-url-in-php
 ?>
