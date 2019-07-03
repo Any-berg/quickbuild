@@ -15,12 +15,12 @@ HTML;
     exit($information);
 }
 $loader = new Loader([
-  '.env',
-  '.env.default'
+  __DIR__ . '/.env',
+  __DIR__ . '/.env.default'
 ]);
 $loader->parse()->putenv(true);
 
-// reconstruct AUTH0_REDIRECT_URI from current one, as they should be identical
+// construct AUTH0_REDIRECT_URI from current one, as they should be identical
 $auth0_redirect_uri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 
 // contact authenticator for user information and login if new session is needed
