@@ -12,7 +12,8 @@ This implementation sacrifices the [Self-Registering](https://wiki.pmease.com/di
 
 ![unauthorize](img/unauthorize.png)
 
-The reverse proxy needs to ensure that all requests coming to it are stripped of this authentication header. The authentication/callback URL (repurposed from registration) is already protected from tampering, but possible authentication headers need to be removed from all unprotected URLs as well.
+The reverse proxy needs to ensure that all other requests coming to it are stripped of this authentication header; the authentication/callback URL (repurposed from registration) is already protected from tampering.
+
 
 ## Never Trust Localhost!
 
@@ -24,5 +25,5 @@ QuickBuild has to trust the authentication header from some specified IP address
 
 ## Login Name Changes
 
-[My Setting](https://wiki.pmease.com/display/qb90/Manage+User+Profile) normally allows users to change their `Login Name`. This causes problems for any external authenticator. Using [Single Sign-On](https://wiki.pmease.com/display/qb90/Single+sign-on+Support) has forced the reverse proxy to disable it as a security risk: it could have been used to secretly initialize the accounts of still unregistered colleagues with preset passwords. If someone's `Login Name` still needs to be changed, administrators can do that from [User Management](https://wiki.pmease.com/display/qb90/User+and+Group+Management).
+[My Setting](https://wiki.pmease.com/display/qb90/Manage+User+Profile) normally allows users to change their `Login Name`. This causes problems for any external authenticator. Using [Single Sign-On](https://wiki.pmease.com/display/qb90/Single+sign-on+Support) has forced the reverse proxy to disable `Login Name` changing as a security risk: it could be used to secretly initialize the accounts of still unregistered colleagues with preset passwords. If someone's `Login Name` still needs to be changed, administrators can do that from [User Management](https://wiki.pmease.com/display/qb90/User+and+Group+Management).
 
