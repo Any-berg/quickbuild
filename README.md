@@ -12,7 +12,7 @@ This implementation sacrifices the [Self-Registering](https://wiki.pmease.com/di
 
 ![unauthorize](img/unauthorize.png)
 
-The reverse proxy needs to ensure that all other requests coming to it are stripped of this authentication header; the authentication/callback URL (repurposed from registration) is already protected from tampering.
+The reverse proxy needs to ensure that all other requests coming to it are stripped of this authentication header; the authentication/callback URL is already protected from tampering.
 
 
 ## Never Trust Localhost!
