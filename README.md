@@ -16,11 +16,11 @@ The reverse proxy needs to ensure that all requests coming to it are stripped of
 
 ## Never Trust Localhost!
 
-QuickBuild has to trust the authentication header from some specified IP address. Surprisingly, `localhost` cannot be trusted because of its potential for [Privilege Escalation](https://en.wikipedia.org/wiki/Privilege_escalation): already authenticated users can find out who the administrators are and thereby know their `Login Name`s - and they don't even need `RESTful API Accessible`, `Script Allowed` or inherently dangerous permissions like `EDIT_SETTINGS`, `CREATE_SCRIPT` and `RUN_BUILD`, to authorize their RESTful API calls from shell commands executed locally as the QuickBuild process user, via QuickBuild scripts that any user can insert even without any permissions.
+QuickBuild has to trust the authentication header from some specified IP address. Surprisingly, `localhost` cannot be trusted because of its potential for [Privilege Escalation](https://en.wikipedia.org/wiki/Privilege_escalation): already authenticated users can find out who the administrators are and thereby know their `Login Name`s - and they don't even need `RESTful API Accessible`, `Script Allowed` or inherently dangerous permissions like `EDIT_SETTINGS`, `CREATE_SCRIPT` and `RUN_BUILD`, to authorize their [RESTful API](https://wiki.pmease.com/display/qb90/RESTful+API) calls with the authentication header, from shell commands executed locally as the QuickBuild process user, via QuickBuild scripts that any user can insert even without any permissions. Since localhost requests bypass the reverse proxy, there is no way to strip them of the authentication header.
 
 ![trust](img/trust.png)
 
-Containerizing the reverse proxy gives it a distinct IP that can be trusted, and even a possible [Binding Address](https://wiki.pmease.com/display/qb90/Listen+to+specified+IP+address) for QuickBuild; that would force all requests, including RESTful API calls from the `server` build node, to pass through the proxy. This wouldn't give any additional security, since localhost authentication headers are already not trusted.
+[Containerizing](https://en.wikipedia.org/wiki/OS-level_virtualisation) the reverse proxy gives it a distinct IP that can be trusted, and even a possible [Binding Address](https://wiki.pmease.com/display/qb90/Listen+to+specified+IP+address) for QuickBuild; that would force all requests, including RESTful API calls from the `server` build node, to go through the proxy. This wouldn't give any additional security, since localhost authentication headers are already not trusted.
 
 ## Login Name Changes
 
