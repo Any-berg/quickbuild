@@ -1,12 +1,14 @@
 # parent image is based on httpd:2.4.39 (see "httpd/build.sh" for details)
 FROM custom/httpd:2.4.39-openidc
 
-ENV emailPattern     ^[^@]+@.+$
+# provide at least first 3 values (from your OIDC provider) in an ".env" file
+#ENV OIDCProvider     
+ENV OIDCClientID          _
+ENV OIDCClientSecret      _
 
-ENV OIDCProvider=
-ENV OIDCClientID=
-ENV OIDCClientSecret=
-ENV OIDCCryptoPassphrase=
+#ENV OIDCCryptoPassphrase
+ENV emailPattern          ^[^@]+@.+$
+ENV serverAdmin           admin@your-domain.com
 
 COPY reverse-proxy.conf conf/extra/httpd-vhosts.conf
 
