@@ -1,23 +1,14 @@
 #!/usr/bin/env bash
 
-if [ ! -f .env ]; then
-    echo "\
-# missing '.env': get values for first three from your OIDC provider
-OIDCProvider=
-OIDCClientID=
-OIDCClientSecret=
-
-#OIDCCryptoPassphrase=<RANDOMLY_GENERATED_STRING>
-#emailPattern=^[^@]+@.+$"
-    exit 1
-fi
+# make sure to work on the right directory
+cd "$(dirname "${BASH_SOURCE[0]}")"
 
 HOSTIP=`ip -4 addr show scope global dev eth0 | grep inet | awk '{print \$2}' | cut -d / -f 1`
 
 docker run \
     --add-host=docker:$HOSTIP \
     --env HOSTIP=$HOSTIP \
-    --env-file ./.env \
+    $([ -f .env ] && echo --env-file ./.env) \
     --env OIDCCryptoPassphrase=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo '') \
     --publish 80:80 \
     qb-sso
