@@ -5,6 +5,8 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 
 HOSTIP=`ip -4 addr show scope global dev eth0 | grep inet | awk '{print \$2}' | cut -d / -f 1`
 
+docker stop "$(docker container ls | grep qb-sso | cut -d' ' -f1)" 2>/dev/null
+
 docker run \
     --add-host=docker:$HOSTIP \
     --env HOSTIP=$HOSTIP \
@@ -14,7 +16,7 @@ docker run \
     --detach \
     qb-sso
 
-rm -f .env
+rm -fv .env
 
 #https://docs.docker.com/engine/reference/commandline/run/
     #set-environment-variables--e---env---env-file
