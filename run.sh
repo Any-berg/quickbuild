@@ -11,7 +11,10 @@ docker run \
     $([ -f .env ] && echo --env-file ./.env) \
     --env OIDCCryptoPassphrase=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo '') \
     --publish 80:80 \
+    --detach \
     qb-sso
+
+rm -f .env
 
 #https://docs.docker.com/engine/reference/commandline/run/
     #set-environment-variables--e---env---env-file
