@@ -8,7 +8,7 @@ ENV OIDCClientSecret      _
 
 #ENV OIDCCryptoPassphrase
 ENV emailPattern          ^[^@]+@.+$
-ENV serverAdmin           admin@your-domain.com
+ENV ServerAdmin           admin@your-domain.com
 
 COPY reverse-proxy.conf conf/extra/httpd-vhosts.conf
 
